@@ -12,7 +12,7 @@
             while (!done)
             {
                 Console.Clear();
-                Console.SetCursorPosition(35, 2);
+                Console.SetCursorPosition(36, 2);
                 Console.WriteLine("Welcome to my extremely cool menu screen for my loops programming assignment!");
                 Console.WriteLine();
                 Console.WriteLine();
@@ -33,6 +33,10 @@
                 if (choice == "1")
                 {
                     Prompter();
+                }
+                else if (choice  == "2")
+                {
+                    BankOfBlorb();
                 }
             }
         }
@@ -79,6 +83,70 @@
             }
             Console.WriteLine();
             Console.WriteLine("Thanks! Press 'ENTER' to return to the main menu");
+            Console.ReadLine();
+        }
+
+        // Simple Banking Machine
+        public static void BankOfBlorb()
+        {
+            string choice = "";
+            bool done = false;
+            double balance = 150;
+            while (!done)
+            {
+                int y = 19;
+                Console.Clear();
+                Console.SetCursorPosition(60, 1);
+                Console.WriteLine("Welcome to the Bank of Blorb!");
+                Console.WriteLine();
+                Console.SetCursorPosition(64, 3);
+                Console.WriteLine($"Your balance: {balance.ToString("C")}");
+                Console.SetCursorPosition(55, 4);
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.SetCursorPosition(42, 6);
+                Console.WriteLine("Here, you are able to make any Blorbian transaction that you wish.");
+                Console.SetCursorPosition(38, 7);
+                Console.WriteLine("Please note: You are charged a fee of $0.75 for each banking transaction.");
+                Console.SetCursorPosition(52, 9);
+                Console.WriteLine("Select what transaction you'd like to perform:");
+                Console.SetCursorPosition(64, 11);
+                Console.WriteLine("Option 1: Deposit");
+                Console.SetCursorPosition(64, 12);
+                Console.WriteLine("Option 2: Withdrawal");
+                Console.SetCursorPosition(64, 13);
+                Console.WriteLine("Option 3: Bill Payment");
+                Console.SetCursorPosition(64, 14);
+                Console.WriteLine("Option 4: Balance Update");
+                Console.SetCursorPosition(64, 15);
+                Console.WriteLine("Or, enter 'Q' to exit.");
+                Console.SetCursorPosition(55, 16);
+                Console.WriteLine("---------------------------------------");
+                Console.SetCursorPosition(61, 18);
+                Console.Write("Enter in your choice here: ");
+                choice = Console.ReadLine();
+                choice = choice.ToUpper().Trim();
+                while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "Q")
+                {
+                    Console.SetCursorPosition(61, y);
+                    Console.Write("Invalid Input. Try again: ");
+                    choice = Console.ReadLine();
+                    y++;
+                }
+                if (choice == "1")
+                {
+                    BlorbDeposit(balance);
+                }
+            }
+        }
+        public static void BlorbDeposit(double balance)
+        {
+            Console.Clear();
+            Console.SetCursorPosition(131, 1);
+            Console.WriteLine($"Balance: {balance.ToString("C")}");
+            Console.SetCursorPosition(3, 1);
+            Console.WriteLine("How much would you like to deposit today?");
             Console.ReadLine();
         }
     }
