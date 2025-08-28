@@ -12,8 +12,8 @@
             while (!done)
             {
                 Console.Clear();
-                Console.SetCursorPosition(36, 2);
-                Console.WriteLine("Welcome to my extremely cool menu screen for my loops programming assignment!");
+                Console.SetCursorPosition(53, 2);
+                Console.WriteLine("Welcome to my loops programming assignment!");
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("Pick what part of the assignment you'd like to see.");
@@ -91,39 +91,44 @@
         {
             string choice = "";
             bool done = false;
-            double balance = 150;
+            double balance = 150, cash = 10000;
+            List <string> balanceUpdate = new List<string>();
             while (!done)
             {
-                int y = 19;
+                int y = 20;
+                string balanceText = $"Your balance: {balance.ToString("C")}";
+                string cashText = $"Your cash: {cash.ToString("C")}";
                 Console.Clear();
                 Console.SetCursorPosition(60, 1);
                 Console.WriteLine("Welcome to the Bank of Blorb!");
                 Console.WriteLine();
-                Console.SetCursorPosition(64, 3);
-                Console.WriteLine($"Your balance: {balance.ToString("C")}");
-                Console.SetCursorPosition(55, 4);
+                Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                Console.WriteLine(balanceText);
+                Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                Console.WriteLine(cashText);
+                Console.SetCursorPosition(55, 5);
                 Console.WriteLine("---------------------------------------");
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.SetCursorPosition(42, 6);
+                Console.SetCursorPosition(42, 7);
                 Console.WriteLine("Here, you are able to make any Blorbian transaction that you wish.");
-                Console.SetCursorPosition(38, 7);
+                Console.SetCursorPosition(38, 8);
                 Console.WriteLine("Please note: You are charged a fee of $0.75 for each banking transaction.");
-                Console.SetCursorPosition(52, 9);
+                Console.SetCursorPosition(52, 10);
                 Console.WriteLine("Select what transaction you'd like to perform:");
-                Console.SetCursorPosition(64, 11);
-                Console.WriteLine("Option 1: Deposit");
                 Console.SetCursorPosition(64, 12);
-                Console.WriteLine("Option 2: Withdrawal");
+                Console.WriteLine("Option 1: Deposit");
                 Console.SetCursorPosition(64, 13);
-                Console.WriteLine("Option 3: Bill Payment");
+                Console.WriteLine("Option 2: Withdrawal");
                 Console.SetCursorPosition(64, 14);
-                Console.WriteLine("Option 4: Balance Update");
+                Console.WriteLine("Option 3: Bill Payment");
                 Console.SetCursorPosition(64, 15);
+                Console.WriteLine("Option 4: Balance Update");
+                Console.SetCursorPosition(64, 16);
                 Console.WriteLine("Or, enter 'Q' to exit.");
-                Console.SetCursorPosition(55, 16);
+                Console.SetCursorPosition(55, 18);
                 Console.WriteLine("---------------------------------------");
-                Console.SetCursorPosition(61, 18);
+                Console.SetCursorPosition(61, 19);
                 Console.Write("Enter in your choice here: ");
                 choice = Console.ReadLine();
                 choice = choice.ToUpper().Trim();
@@ -136,18 +141,195 @@
                 }
                 if (choice == "1")
                 {
-                    BlorbDeposit(balance);
+                    double deposit;
+                    y = 7;
+                    Console.Clear();
+                    Console.SetCursorPosition(54, 1);
+                    Console.WriteLine("How much would you like to deposit today?");
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                    Console.WriteLine(cashText);
+                    Console.SetCursorPosition(64, 6);
+                    Console.Write("Deposit Amount: $");
+                    while (!double.TryParse(Console.ReadLine(), out deposit))
+                    {
+                        Console.SetCursorPosition(62, y);
+                        Console.Write("Invalid Input. Try again: $");
+                        y++;
+                    }
+                    while (deposit < 0.75 || deposit > cash)
+                    {
+                        Console.SetCursorPosition(33, y);
+                        Console.Write("Deposited amount must be larger than $0.75 and less than cash on-hand. Try again: $");
+                        y++;
+                        while (!double.TryParse(Console.ReadLine(), out deposit))
+                        {
+                            Console.SetCursorPosition(62, y);
+                            Console.Write("Invalid Input. Try again: $");
+                            y++;
+                        }
+                    }
+                    balance += deposit - 0.75;
+                    cash -= deposit;
+                    balanceText = $"Your balance: {balance.ToString("C")}";
+                    cashText = $"Your cash: {cash.ToString("C")}";
+                    balanceUpdate.Add($"DEPOSIT AT {DateTime.Now.ToString("HH:mm:ss")}: +{deposit.ToString("C")}. Balance: {(balance - deposit + 0.75).ToString("C")} --> {balance.ToString("C")}");
+
+                    y++;
+                    Console.SetCursorPosition(0, 3);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, 4);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                    Console.WriteLine(cashText);
+                    Console.SetCursorPosition(47, y);
+                    Console.WriteLine("Money deposited. Your account balance has been updated.");
+                    Console.SetCursorPosition(15, y + 1);
+                    Console.WriteLine("Reminder: a fee of $0.75 is charged for each banking transaction. Your balance may be lower than expected due to that.");
+                    Console.SetCursorPosition(54, y + 3);
+                    Console.WriteLine("Press 'ENTER' to return to the bank menu.");
+                    Console.SetCursorPosition(95, y + 3);
+                    Console.ReadLine();
+                }
+                else if (choice == "2")
+                {
+                    double withdrawal;
+                    y = 7;
+                    Console.Clear();
+                    Console.SetCursorPosition(54, 1);
+                    Console.WriteLine("How much would you like to withdraw today?");
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                    Console.WriteLine(cashText);
+                    Console.SetCursorPosition(63, 6);
+                    Console.Write("Withdrawal Amount: $");
+                    while (!double.TryParse(Console.ReadLine(), out withdrawal))
+                    {
+                        Console.SetCursorPosition(62, y);
+                        Console.Write("Invalid Input. Try again: $");
+                        y++;
+                    }
+                    while (withdrawal > balance + 0.75 || withdrawal < 0)
+                    {
+                        Console.SetCursorPosition(12, y);
+                        Console.Write("Withdrawn amount must be less than the account balance plus the transaction fee, and cannot be less than zero. Try again: $");
+                        y++;
+                        while (!double.TryParse(Console.ReadLine(), out withdrawal))
+                        {
+                            Console.SetCursorPosition(62, y);
+                            Console.Write("Invalid Input. Try again: $");
+                            y++;
+                        }
+                    }
+                    balance -= withdrawal + 0.75;
+                    cash += withdrawal;
+                    balanceText = $"Your balance: {balance.ToString("C")}";
+                    cashText = $"Your cash: {cash.ToString("C")}";
+                    balanceUpdate.Add($"WITHDRAWAL AT {DateTime.Now.ToString("HH:mm:ss")}: -{withdrawal.ToString("C")}. Balance: {(balance + withdrawal + 0.75).ToString("C")} --> {balance.ToString("C")}");
+                    y++;
+                    Console.SetCursorPosition(0, 3);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, 4);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                    Console.WriteLine(cashText);
+                    Console.SetCursorPosition(48, y);
+                    Console.WriteLine("Money withdrawn. Your account balance has been updated.");
+                    Console.SetCursorPosition(15, y + 1);
+                    Console.WriteLine("Reminder: a fee of $0.75 is charged for each banking transaction. Your balance may be lower than expected due to that.");
+                    Console.SetCursorPosition(54, y + 3);
+                    Console.WriteLine("Press 'ENTER' to return to the bank menu.");
+                    Console.SetCursorPosition(95, y + 3);
+                    Console.ReadLine();
+                }
+                else if (choice == "3")
+                {
+                    double billPayment;
+                    y = 7;
+                    Console.Clear();
+                    Console.SetCursorPosition(56, 1);
+                    Console.WriteLine("How much would you like to pay today?");
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition((Console.WindowWidth - cashText.Length) / 2, 4);
+                    Console.WriteLine(cashText);
+                    Console.SetCursorPosition(64, 6);
+                    Console.Write("Payment Amount: $");
+                    while (!double.TryParse(Console.ReadLine(), out billPayment))
+                    {
+                        Console.SetCursorPosition(62, y);
+                        Console.Write("Invalid Input. Try again: $");
+                        y++;
+                    }
+                    while (billPayment < 0 || billPayment > balance + 0.75)
+                    {
+                        Console.SetCursorPosition(12, y);
+                        Console.Write("Paid amount must be less than the account balance plus the transaction fee, and cannot be less than zero. Try again: $");
+                        y++;
+                        while (!double.TryParse(Console.ReadLine(), out billPayment))
+                        {
+                            Console.SetCursorPosition(62, y);
+                            Console.Write("Invalid Input. Try again: $");
+                            y++;
+                        }
+                    }
+                    balance -= billPayment + 0.75;
+                    balanceText = $"Your balance: {balance.ToString("C")}";
+                    balanceUpdate.Add($"BILL PAYMENT AT {DateTime.Now.ToString("HH:mm:ss")}: -{billPayment.ToString("C")}. Balance: {(balance + billPayment + 0.75).ToString("C")} --> {balance.ToString("C")}");
+                    y++;
+                    Console.SetCursorPosition(0, 3);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition((Console.WindowWidth - balanceText.Length) / 2, 3);
+                    Console.WriteLine(balanceText);
+                    Console.SetCursorPosition(50, y);
+                    Console.WriteLine("Bill paid. Your account balance has been updated.");
+                    Console.SetCursorPosition(15, y + 1);
+                    Console.WriteLine("Reminder: a fee of $0.75 is charged for each banking transaction. Your balance may be lower than expected due to that.");
+                    Console.SetCursorPosition(54, y + 3);
+                    Console.WriteLine("Press 'ENTER' to return to the bank menu.");
+                    Console.SetCursorPosition(95, y + 3);
+                    Console.ReadLine();
+                }
+                else if (choice == "4")
+                {
+                    y = 5;
+                    balance -= 0.75;
+                    balanceUpdate.Add($"BALANCE UPDATE AT {DateTime.Now.ToString("HH:mm:ss")}: -$0.75. Balance: {(balance + 0.75).ToString("C")} --> {balance.ToString("C")}");
+                    Console.Clear();
+                    Console.SetCursorPosition(60, 1);
+                    Console.WriteLine("Bank of Blorb Chequing Account");
+                    Console.SetCursorPosition(55, 3);
+                    Console.WriteLine("---------------------------------------");
+                    for (int i = 0; i < balanceUpdate.Count; i++)
+                    {
+                        Console.SetCursorPosition((Console.WindowWidth - balanceUpdate[i].Length) / 2, y);
+                        Console.WriteLine(balanceUpdate[i]);
+                        y += 2;
+                    }
+                    Console.SetCursorPosition(55, y);
+                    Console.WriteLine("---------------------------------------");
+                    Console.SetCursorPosition(54, y + 3);
+                    Console.WriteLine("Press 'ENTER' to return to the bank menu.");
+                    Console.SetCursorPosition(95, y + 3);
+                    Console.ReadLine();
+                }
+                else if (choice == "Q")
+                {
+                    done = true;
                 }
             }
         }
-        public static void BlorbDeposit(double balance)
+
+        // Doubles Roller
+        public static void DoublesRoller()
         {
-            Console.Clear();
-            Console.SetCursorPosition(131, 1);
-            Console.WriteLine($"Balance: {balance.ToString("C")}");
-            Console.SetCursorPosition(3, 1);
-            Console.WriteLine("How much would you like to deposit today?");
-            Console.ReadLine();
+
         }
     }
 }
