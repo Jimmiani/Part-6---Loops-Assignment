@@ -345,9 +345,10 @@
                 Console.WriteLine($"Rolls: {rolls}");
                 Console.WriteLine();
                 d1.RollDie();
-                d2.RollDie();
                 d1.DrawRoll();
+                d2.RollDie();
                 d2.DrawRoll();
+                Console.WriteLine();
                 if (d1.Roll !=  d2.Roll)
                 {
                     rolls++;
