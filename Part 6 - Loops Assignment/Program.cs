@@ -38,6 +38,10 @@
                 {
                     BankOfBlorb();
                 }
+                else if (choice == "3")
+                {
+                    DoublesRoller();
+                }
             }
         }
 
@@ -329,7 +333,40 @@
         // Doubles Roller
         public static void DoublesRoller()
         {
-
+            Die d1 = new Die();
+            Die d2 = new Die();
+            int rolls = 1;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("   Let's see how many rolls it takes until we get doubles!");
+                Console.SetCursorPosition(138, 1);
+                Console.WriteLine($"Rolls: {rolls}");
+                Console.WriteLine();
+                d1.RollDie();
+                d2.RollDie();
+                d1.DrawRoll();
+                d2.DrawRoll();
+                if (d1.Roll !=  d2.Roll)
+                {
+                    rolls++;
+                    Console.WriteLine($"   Aw man! A {d1.Roll} and a {d2.Roll} aren't doubles! Press 'ENTER' to roll again!");
+                    Console.ReadLine();
+                }
+                else if (d1.Roll == d2.Roll && rolls == 1)
+                {
+                    Console.WriteLine($"   Wow! We already got doubles?! It only took one try! Press 'ENTER' to return to the main menu.");
+                    Console.ReadLine();
+                    break;
+                }
+                else if (d1.Roll > d2.Roll)
+                {
+                    Console.WriteLine($"   Hey! We got doubles! It only took {rolls} tries! Press 'ENTER' to return to the main menu.");
+                    Console.ReadLine();
+                    break;
+                }
+            }
         }
     }
 }
