@@ -344,8 +344,11 @@
                 Console.SetCursorPosition(138, 1);
                 Console.WriteLine($"Rolls: {rolls}");
                 Console.WriteLine();
+                Console.WriteLine("Dice 1:");
                 d1.RollDie();
                 d1.DrawRoll();
+                Console.WriteLine();
+                Console.WriteLine("Dice 2:");
                 d2.RollDie();
                 d2.DrawRoll();
                 Console.WriteLine();
@@ -361,7 +364,7 @@
                     Console.ReadLine();
                     break;
                 }
-                else if (d1.Roll > d2.Roll)
+                else if (d1.Roll == d2.Roll)
                 {
                     Console.WriteLine($"   Hey! We got doubles! It only took {rolls} tries! Press 'ENTER' to return to the main menu.");
                     Console.ReadLine();
